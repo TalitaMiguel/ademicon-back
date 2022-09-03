@@ -39,7 +39,7 @@ export const postLogin = async (req: Request, res: Response): Promise<void> => {
 
     const token:string = jwt.sign({userId: login[0].id}, JWT_KEY, {expiresIn: 3600})
 
-    res.status(200).send({message:"Successfully authenticated",auth: true, token});
+    res.status(200).send({message:"Successfully authenticated",auth: true, token, id:login[0].id});
   } catch (error: any) {
     res.status(res.statusCode).send(error.sqlMessage || error.message);
   }
