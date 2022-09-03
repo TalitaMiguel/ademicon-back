@@ -12,7 +12,7 @@ app.get("/connectionTest", connectionTest)
 app.get("/users", getAllUser)
 app.get("/users/byId/:id", getUserById)
 
-app.post("/users", postUser)
+app.post("/users/signup", postUser)
 app.post("/users/login", postLogin)
 
 app.put("/users/:id", putUser)
