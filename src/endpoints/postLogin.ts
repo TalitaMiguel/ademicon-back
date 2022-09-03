@@ -6,11 +6,21 @@ import { selectUserLogin } from "../data/selectUserLogin";
 export const postLogin = async (req: Request, res: Response): Promise<void> => {
   try {
     const JWT_KEY = process.env.JWT_KEY as string
-    const { name, password } = req.body;
+    const { email, password } = req.body;
 
-    if (!name || !password) {
+    if (!email || !password) {
       res.statusCode = 422;
       throw new Error("Please check inputs. Missing values.");
+    }
+
+    const emailValidation = (email: string) => {
+      const validation = /\S+@\S+\.\S+/;
+      return validation.test(email);
+    };
+
+    if (!emailValidation(email)) {
+      res.statusCode = 400;
+      throw new Error(`Please check email. Invalid email provided: ${email}.`);
     }
 
     if (password.length < 6) {
@@ -20,7 +30,7 @@ export const postLogin = async (req: Request, res: Response): Promise<void> => {
       );
     }
 
-    const login = await selectUserLogin(name, password);
+    const login = await selectUserLogin(email, password);
 
     if (!login.length) {
       res.statusCode = 400;
