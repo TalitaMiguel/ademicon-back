@@ -33,7 +33,12 @@ export const putUser = async (req: Request, res: Response): Promise<void> => {
       password_user: password,
     };
 
-    await updateUser(updatedUser, id);
+    const result = await updateUser(updatedUser, id);
+
+    if(!result) {
+      res.statusCode = 400
+      throw new Error("There was an error updating");
+    }
 
     res.status(200).send("User changes made successfully.");
   } catch (error: any) {
