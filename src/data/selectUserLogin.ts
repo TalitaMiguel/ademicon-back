@@ -1,11 +1,11 @@
 import { connection } from "./connection";
 
 export const selectUserLogin = async (
-  name: string,
+  email: string,
   password: string
 ): Promise<any> => {
   return await connection("ademicon_users")
     .select("*")
-    .where("name_user", name)
+    .where("email_user", email)
     .andWhere("password_user", password);
 };
