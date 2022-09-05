@@ -34,7 +34,12 @@ export const postUser = async (req: Request, res: Response): Promise<void> => {
       password_user: password,
     };
 
-    await createUser(newUser);
+    const result = await createUser(newUser);
+
+    if(!result) {
+      res.statusCode = 400
+      throw new Error("There was an error registering the user");
+    }
 
     res.status(201).send("User created successfully.");
   } catch (error: any) {
